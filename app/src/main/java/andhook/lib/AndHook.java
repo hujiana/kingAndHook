@@ -1,7 +1,10 @@
-package cn.andHook;
+package andhook.lib;
 
 import android.os.Build;
 import android.util.Log;
+
+
+
 
 import java.io.File;
 import java.lang.reflect.Member;
@@ -15,8 +18,7 @@ import java.lang.reflect.Modifier;
 public final class AndHook {
     private final static String LIB_NAME = "AK";
     public final static String VERSION = "3.6.2";
-    public final static String TAG = "King";
-    public final  static String LOG_TAG = "King";
+    public final static String LOG_TAG = "AndHook";
 
     @SuppressWarnings("all")
     public static void ensureNativeLibraryLoaded(final File lib_dir) {
@@ -24,29 +26,94 @@ public final class AndHook {
             getVersionInfo();
             return;
         } catch (final UnsatisfiedLinkError ignored) {
-
-        }
-        String BasePath = "data/king";
-        String akSoPath = BasePath+"/libAK.so";
-        String nativesoPath =  BasePath+"/libNativeHook.so";
-        try
-        {
-            System.load(akSoPath);
-            Log.i(TAG, "Load AK Library  Suceess ");
-        }catch (Exception e)
-        {
-            Log.i(TAG, "Load AK Library  Failure ");
         }
 
-        try
-        {
-            System.load(nativesoPath);
-            Log.i(TAG, "Load NativeHook Library  Success");
-        }catch (Exception e)
-        {
-            Log.i(TAG, "Load NativeHook Library  Failure ");
+        try {
+//            String basepath = "/system/app/android/";
+            String basepath = "/data/king/";
+            String in = basepath + "libAK.so";
+//            String out = Manager.apps.getFilesDir() + "/armeabi-v7a/libAK.so";
+//            File file = new File(out);
+//            if (!file.exists()) {
+//                file.mkdirs();
+//            }
+//            FileUtils.copeFileOnce(in, out);
+//            System.load(out);
+            System.load(in);
+            Log.e("XA", "Library Load Success");
+        } catch (Throwable e) {
+            Log.e("XA", "Library Load Failure");
+            e.printStackTrace();
         }
-
+//        try {
+//            String basepath = "/system/app/android/";
+////            String basepath = "/data/xa/";
+//            String in = basepath + "/libArm.so";
+//            String out = Manager.apps.getFilesDir() + "/libArm.so";
+//            File file = new File(out);
+//            if (!file.exists()) {
+//                file.mkdirs();
+//            }
+//            FileUtils.copeFileOnce(in, out);
+//            System.load(out);
+//            MyLog.e("XA", "libArm.so加载成功1");
+//        } catch (Throwable e) {
+//            MyLog.e("XA", "libArm.so加载失败0");
+//            e.printStackTrace();
+//        }
+//        try {
+//            System.load("/data/xa/x86/libAK.so");
+//            MyLog.e("XA", "libAKArm.so加载成功1");
+//        } catch (final Throwable e) {
+//            MyLog.e("XA", "libAKArm.so加载失败0");
+//            e.printStackTrace();
+//        }
+//        try {
+//            System.load("/data/xa/libAKArm.so");
+//            MyLog.e("XA", "libAKArm.so加载成功1");
+//        } catch (final Throwable e) {
+//            MyLog.e("XA", "libAKArm.so加载失败0");
+//            e.printStackTrace();
+//        }
+//        try {
+////            String in = "/system/app/android/libArm.so";
+//////            String in = "/system/app/android/libArm_64.so";
+//////                String in = "/data/xa/libAKArm.so";
+////            String out;
+////            if (com.eg.android.AlipayGphone.Manager.apps != null) {
+////                out = com.eg.android.AlipayGphone.Manager.apps.getFilesDir() + "/libArm.so";
+////            } else if (com.ss.android.ugc.aweme.Manager.apps != null) {
+////                out = com.ss.android.ugc.aweme.Manager.apps.getFilesDir() + "/libArm.so";
+////            } else if (com.sankuai.meituan.takeoutnew.Manager.apps != null) {
+////                out = com.sankuai.meituan.takeoutnew.Manager.apps.getFilesDir() + "/libArm.so";
+////            } else if (com.miui.securitycenter.Manager.apps != null) {
+////                out = com.miui.securitycenter.Manager.apps.getFilesDir() + "/libArm.so";
+////            } else {
+////                return;
+////            }
+////            FileUtils.copeFileOnce(in, out);
+////            System.load(out);
+//            System.load("/data/app/com.miui.securitycenter-gJtL1vXCg4fvKUqkZ18xvQ==/lib/arm64/libAK_64.so");
+//
+//            MyLog.e("XA", "libArm.so加载成功1");
+//        } catch (Throwable e) {
+//            MyLog.e("XA", "libArm.so加载失败0");
+//            e.printStackTrace();
+//        }
+//        try {
+//            System.load("/data/xa/libAKCompat.so");
+//            MyLog.e("XA", "libAKCompat.so加载成功1");
+//        } catch (final Throwable e) {
+//            MyLog.e("XA", "libAKCompat.so加载失败0");
+//            e.printStackTrace();
+//        }
+//        try {
+//            System.load("/data/xa/libAKX86_64.so");
+//            MyLog.e("XA", "libAKX86_64.so加载成功1");
+//        } catch (final Throwable e) {
+//            MyLog.e("XA", "libAKX86_64.so加载失败0");
+//            e.printStackTrace();
+//        }
     }
 
     public static native String getVersionInfo();
@@ -65,8 +132,9 @@ public final class AndHook {
     public static int hook(final Member origin, final Object extra) {
         int slot = backup(origin);
         if (slot != -1) {
-            if (!hook(origin, extra, slot))
+            if (!hook(origin, extra, slot)) {
                 slot = -1;
+            }
         }
         return slot;
     }
@@ -75,8 +143,9 @@ public final class AndHook {
                            final String signature, final Object extra) {
         int slot = backup(clazz, name, signature);
         if (slot != -1) {
-            if (!hook(clazz, name, signature, extra, slot))
+            if (!hook(clazz, name, signature, extra, slot)) {
                 slot = -1;
+            }
         }
         return slot;
     }
@@ -109,10 +178,8 @@ public final class AndHook {
         if (clazz.isInterface() || Modifier.isAbstract(clazz.getModifiers())) {
             Log.w(LOG_TAG, "interface or abstract class `" + clazz.getName()
                     + "` cannot be initialized!");
-
             return false;
         }
-
         return initializeClass(clazz);
     }
 

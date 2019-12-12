@@ -1,6 +1,7 @@
-package cn.andHook.xposed;
+package andhook.lib.xposed;
 
-
+import andhook.lib.AndHook;
+import andhook.lib.xposed.XC_MethodHook.MethodHookParam;
 
 import android.util.Log;
 
@@ -11,8 +12,6 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
-
-import cn.andHook.AndHook;
 
 /**
  * This class contains most of Xposed's central logic, such as initialization and callbacks used by
@@ -203,7 +202,7 @@ public final class XposedBridge {
             return invokeOriginalMethod(additionalInfo.slot, thisObject, args);
         }
 
-        final XC_MethodHook.MethodHookParam param = new XC_MethodHook.MethodHookParam();
+        final MethodHookParam param = new MethodHookParam();
         param.slot = additionalInfo.slot;
         param.method = additionalInfo.method;
         param.thisObject = thisObject;

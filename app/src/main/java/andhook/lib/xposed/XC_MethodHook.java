@@ -1,8 +1,8 @@
-package cn.andHook.xposed;
+package andhook.lib.xposed;
 
 import java.lang.reflect.Member;
 
-import cn.andHook.xposed.callbacks.XCallback;
+import andhook.lib.xposed.callbacks.XCallback;
 
 /**
  * Callback class for method hooks.
@@ -72,7 +72,7 @@ public class XC_MethodHook extends XCallback {
      * Wraps information about the method call and allows to influence it.
      */
     @SuppressWarnings({"unused", "WeakerAccess"})
-    public static final class MethodHookParam extends XCallback.Param {
+    public static final class MethodHookParam extends Param {
         /**
          * Backup method slot.
          */
@@ -95,7 +95,7 @@ public class XC_MethodHook extends XCallback {
 
         private Object result = null;
         private Throwable throwable = null;
-        /* package */ boolean returnEarly = false;
+        /* package */ public boolean returnEarly = false;
 
         /**
          * Returns the result of the method call.

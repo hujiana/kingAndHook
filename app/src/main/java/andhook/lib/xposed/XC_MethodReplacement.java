@@ -1,9 +1,6 @@
-package cn.andHook.xposed;
+package andhook.lib.xposed;
 
-
-import cn.andHook.xposed.callbacks.XCallback;
-
-import static cn.andHook.xposed.callbacks.XCallback.PRIORITY_HIGHEST;
+import andhook.lib.xposed.callbacks.XCallback;
 
 /**
  * A special case of {@link XC_MethodHook} which completely replaces the original method.
