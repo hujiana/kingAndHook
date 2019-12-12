@@ -15,7 +15,8 @@ import java.lang.reflect.Modifier;
 public final class AndHook {
     private final static String LIB_NAME = "AK";
     public final static String VERSION = "3.6.2";
-    public final static String LOG_TAG = "AndHook";
+    public final static String TAG = "King";
+    public final  static String LOG_TAG = "King";
 
     @SuppressWarnings("all")
     public static void ensureNativeLibraryLoaded(final File lib_dir) {
@@ -23,36 +24,29 @@ public final class AndHook {
             getVersionInfo();
             return;
         } catch (final UnsatisfiedLinkError ignored) {
+
+        }
+        String BasePath = "data/king";
+        String akSoPath = BasePath+"/libAK.so";
+        String nativesoPath =  BasePath+"/libNativeHook.so";
+        try
+        {
+            System.load(akSoPath);
+            Log.i(TAG, "Load AK Library  Suceess ");
+        }catch (Exception e)
+        {
+            Log.i(TAG, "Load AK Library  Failure ");
         }
 
-
-        // Check if there is a usable directory for temporary files
-        final File tmpdir = new File(System.getProperty("java.io.tmpdir",
-                "/data/local/tmp/"));
-        if (!tmpdir.canWrite() || !tmpdir.canExecute())
-            Log.w(LOG_TAG, "Missing cache directory " + tmpdir);
-
-        try {
-            if (lib_dir == null) {
-                System.loadLibrary(LIB_NAME);
-            } else {
-                System.load(new File(lib_dir, "lib" + LIB_NAME + ".so")
-                        .getAbsolutePath());
-            }
-        } catch (final UnsatisfiedLinkError e) {
-            try {
-                // compatible with libhoudini
-                if (lib_dir == null) {
-                    System.loadLibrary(LIB_NAME + "Compat");
-                } else {
-                    System.load(new File(lib_dir, "lib" + LIB_NAME + "Compat"
-                            + ".so").getAbsolutePath());
-                }
-            } catch (final UnsatisfiedLinkError ignored) {
-                throw new RuntimeException("Incompatible platform "
-                        + Build.VERSION.SDK_INT, e);
-            }
+        try
+        {
+            System.load(nativesoPath);
+            Log.i(TAG, "Load NativeHook Library  Success");
+        }catch (Exception e)
+        {
+            Log.i(TAG, "Load NativeHook Library  Failure ");
         }
+
     }
 
     public static native String getVersionInfo();
