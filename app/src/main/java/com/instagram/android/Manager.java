@@ -30,9 +30,51 @@ public class Manager {
         Log.i(TAG, "Start init");
         apps = application;
         //mqttGetSocket();
-        getToken();
+        //getToken();
         //getChatMessage(application);
+        getRequestAndResponse();
     }
+
+
+    /**
+     * Hook HttpResponse Body
+     */
+    public static void getRequestAndResponse()
+    {
+        final Class<?> requestAndResponse = XposedHelpers.findClass("X.0nv", apps.getClassLoader());
+        XposedBridge.hookAllMethods(requestAndResponse, "A00", new XC_MethodHook() {
+
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+
+                StringBuilder builder = new StringBuilder();
+                if(param.args.length >= 2)
+                {
+                    Object obj =  param.args[1];
+                    String RequestContent =  PrintMessageTools.GetRequstContent(obj);
+                    builder.append("\r\n---------------------------- Request ----------------------------\r\n"+RequestContent+"\r\n\r\n");
+                }
+
+
+
+                //获取响应结果
+                Object obj = param.getResult();
+                if (obj == null) {
+                    Log.i(PrintMessageTools.InternalTag, "afterHookedMethod: onBody this object is null ");
+                    return;
+                }
+
+                String RequestContent = PrintMessageTools.GetResponceContent(obj);
+                builder.append("\r\n---------------------------- Response ----------------------------\r\n"+RequestContent+"\r\n\r\n");
+
+
+                PrintMessageTools.Intelligentoutput(builder);
+
+            }
+        });
+
+    }
+
 
     /**
      * Get mqtt Socket object
