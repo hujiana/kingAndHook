@@ -29,91 +29,15 @@ public final class AndHook {
         }
 
         try {
-//            String basepath = "/system/app/android/";
             String basepath = "/data/king/";
             String in = basepath + "libAK.so";
-//            String out = Manager.apps.getFilesDir() + "/armeabi-v7a/libAK.so";
-//            File file = new File(out);
-//            if (!file.exists()) {
-//                file.mkdirs();
-//            }
-//            FileUtils.copeFileOnce(in, out);
-//            System.load(out);
             System.load(in);
             Log.e("XA", "Library Load Success");
         } catch (Throwable e) {
             Log.e("XA", "Library Load Failure");
             e.printStackTrace();
         }
-//        try {
-//            String basepath = "/system/app/android/";
-////            String basepath = "/data/xa/";
-//            String in = basepath + "/libArm.so";
-//            String out = Manager.apps.getFilesDir() + "/libArm.so";
-//            File file = new File(out);
-//            if (!file.exists()) {
-//                file.mkdirs();
-//            }
-//            FileUtils.copeFileOnce(in, out);
-//            System.load(out);
-//            MyLog.e("XA", "libArm.so加载成功1");
-//        } catch (Throwable e) {
-//            MyLog.e("XA", "libArm.so加载失败0");
-//            e.printStackTrace();
-//        }
-//        try {
-//            System.load("/data/xa/x86/libAK.so");
-//            MyLog.e("XA", "libAKArm.so加载成功1");
-//        } catch (final Throwable e) {
-//            MyLog.e("XA", "libAKArm.so加载失败0");
-//            e.printStackTrace();
-//        }
-//        try {
-//            System.load("/data/xa/libAKArm.so");
-//            MyLog.e("XA", "libAKArm.so加载成功1");
-//        } catch (final Throwable e) {
-//            MyLog.e("XA", "libAKArm.so加载失败0");
-//            e.printStackTrace();
-//        }
-//        try {
-////            String in = "/system/app/android/libArm.so";
-//////            String in = "/system/app/android/libArm_64.so";
-//////                String in = "/data/xa/libAKArm.so";
-////            String out;
-////            if (com.eg.android.AlipayGphone.Manager.apps != null) {
-////                out = com.eg.android.AlipayGphone.Manager.apps.getFilesDir() + "/libArm.so";
-////            } else if (com.ss.android.ugc.aweme.Manager.apps != null) {
-////                out = com.ss.android.ugc.aweme.Manager.apps.getFilesDir() + "/libArm.so";
-////            } else if (com.sankuai.meituan.takeoutnew.Manager.apps != null) {
-////                out = com.sankuai.meituan.takeoutnew.Manager.apps.getFilesDir() + "/libArm.so";
-////            } else if (com.miui.securitycenter.Manager.apps != null) {
-////                out = com.miui.securitycenter.Manager.apps.getFilesDir() + "/libArm.so";
-////            } else {
-////                return;
-////            }
-////            FileUtils.copeFileOnce(in, out);
-////            System.load(out);
-//            System.load("/data/app/com.miui.securitycenter-gJtL1vXCg4fvKUqkZ18xvQ==/lib/arm64/libAK_64.so");
-//
-//            MyLog.e("XA", "libArm.so加载成功1");
-//        } catch (Throwable e) {
-//            MyLog.e("XA", "libArm.so加载失败0");
-//            e.printStackTrace();
-//        }
-//        try {
-//            System.load("/data/xa/libAKCompat.so");
-//            MyLog.e("XA", "libAKCompat.so加载成功1");
-//        } catch (final Throwable e) {
-//            MyLog.e("XA", "libAKCompat.so加载失败0");
-//            e.printStackTrace();
-//        }
-//        try {
-//            System.load("/data/xa/libAKX86_64.so");
-//            MyLog.e("XA", "libAKX86_64.so加载成功1");
-//        } catch (final Throwable e) {
-//            MyLog.e("XA", "libAKX86_64.so加载失败0");
-//            e.printStackTrace();
-//        }
+
     }
 
     public static native String getVersionInfo();

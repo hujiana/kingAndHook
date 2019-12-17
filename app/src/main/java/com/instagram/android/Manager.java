@@ -1,6 +1,7 @@
 package com.instagram.android;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import java.net.Socket;
@@ -27,21 +28,21 @@ public class Manager {
      */
     public static void init(Application application) {
 
-        Log.i(TAG, "Start init");
-        apps = application;
+        //Log.i(TAG, "Start init");
+        //apps = application;
         //mqttGetSocket();
         //getToken();
         //getChatMessage(application);
-        getRequestAndResponse();
+        //getRequestAndResponse();
     }
 
 
     /**
      * Hook HttpResponse Body
      */
-    public static void getRequestAndResponse()
+    public static void getRequestAndResponse(ClassLoader load )
     {
-        final Class<?> requestAndResponse = XposedHelpers.findClass("X.0nv", apps.getClassLoader());
+        final Class<?> requestAndResponse = XposedHelpers.findClass("X.0nv", load);
         XposedBridge.hookAllMethods(requestAndResponse, "A00", new XC_MethodHook() {
 
             @Override
